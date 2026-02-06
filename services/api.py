@@ -20,6 +20,10 @@ class SpoilageRequest(BaseModel):
     handling_type: str
     historical_spoilage_rate: float
 
+@app.get("/")
+def root():
+    return {"status": "ML API is running"}
+
 @app.post("/predict/spoilage")
 def spoilage(req: SpoilageRequest):
     df = pd.DataFrame([req.dict()])
