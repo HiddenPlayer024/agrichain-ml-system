@@ -1,9 +1,11 @@
-import pandas as pd
+from pathlib import Path
+
 from joblib import load
 
 MODEL_VERSION = "v1.0.0"
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
-model = load("models/price/model.pkl")
+model = load(PROJECT_ROOT / "models" / "price" / "model.pkl")
 
 # Conservative baseline volatility (₹/kg)
 PRICE_VOLATILITY_BASELINE = 1.5

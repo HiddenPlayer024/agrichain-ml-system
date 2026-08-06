@@ -2,6 +2,7 @@ import pandas as pd
 from joblib import load
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_absolute_error
+from sklearn.base import clone
 
 df = pd.read_csv("data/synthetic/shelf_life.csv")
 
@@ -13,6 +14,8 @@ X_train, X_test, y_train, y_test = train_test_split(
 )
 
 model = load("models/shelf_life/model.pkl")
+model = clone(model)
+model.fit(X_train, y_train)
 
 pred = model.predict(X_test)
 

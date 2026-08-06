@@ -1,5 +1,3 @@
-import pandas as pd
-
 MODEL_VERSION = "v1.0.0"
 
 def predict_demand(df, crop, region, window=7):
@@ -9,6 +7,10 @@ def predict_demand(df, crop, region, window=7):
     ].sort_values("date")
 
     recent = sub.tail(window)
+    if recent.empty:
+        raise ValueError(
+            f"No demand data available for crop_type '{crop}' in region '{region}'."
+        )
 
     avg = recent["demand_tons"].mean()
 
@@ -19,7 +21,7 @@ def predict_demand(df, crop, region, window=7):
         trend = "decreasing"
 
     return {
-        "expected_demand_tons": round(avg, 1),
+        "expected_demand_tons": round(float(avg), 1),
         "confidence_interval": "±10%",
         "trend": trend,
         "model_version": MODEL_VERSION
