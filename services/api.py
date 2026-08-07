@@ -54,6 +54,9 @@ def shelf_life(req: ShelfLifeRequest):
         return predict_shelf_life(request_frame(req))
     except ValueError as exc:
         raise HTTPException(status_code=422, detail=str(exc)) from exc
+    except Exception as e:
+        print(e)
+        raise
 
 
 class DemandRequest(BaseModel):
